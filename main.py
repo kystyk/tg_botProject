@@ -15,7 +15,7 @@ bot = telebot.TeleBot(TOKEN)
 def send_question(message, question_id):
     question = list(questions[question_id].keys())[0]
     answers = questions[question_id][question].get("answers")
-    image = f"media/{question[question_id][question].get('image')}"
+    image = f"media/{questions[question_id][question].get('image')}"
     with open(image, "rb") as photo:
         bot.send_photo(message.chat.id, caption=question, photo=photo, reply_markup=question_markup(question_id, answers))
     description = questions[question_id][question].get("description")
@@ -36,7 +36,7 @@ def callback_handler(call:types.CallbackQuery):
     data = json.loads(call.data)
     question_id = data.get("question_id")
     answer_id = data.get("answer_id")
-    description = questions[question_id][call.message.text].get("description")
+    description = questions[question_id][call.message.caption].get("description")
     if answer_id == 0:
         bot.send_message(call.message.chat.id, TRUE_ANSWER)
     else:
