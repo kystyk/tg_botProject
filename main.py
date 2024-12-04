@@ -15,7 +15,7 @@ bot = telebot.TeleBot(TOKEN)
 def send_question(message, question_id):
     question = list(questions[question_id].keys())[0]
     answers = questions[question_id][question].get("answers")
-    image = f"media/{question[question_id][question].get("image")}"
+    image = f"media/{question[question_id][question].get('image')}"
     with open(image, "rb") as photo:
         bot.send_photo(message.chat.id, caption=question, photo=photo, reply_markup=question_markup(question_id, answers))
     description = questions[question_id][question].get("description")
